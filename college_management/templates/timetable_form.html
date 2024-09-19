@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+
+{% block title %}Add/Edit Timetable{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4 lg:py-8">
+    <div class="py-8 bg-white shadow sm:rounded-lg p-4">
+        <h1 class="text-2xl font-bold text-gray-900 mb-6">{% if form.instance.pk %}
+            Edit Time Table
+        {% else %}
+            Create Time Table
+        {% endif %}</h1>
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-6">
+                <div class="sm:col-span-2">
+                    <label for="id_course" class="block text-sm font-medium text-gray-700">Course</label>
+                    <select name="course" id="id_course" class="mt-1 block w-full shadow-sm border-gray-300 rounded-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                        {% for course in form.fields.course.queryset %}
+                        <option value="{{ course.pk }}" {% if course.pk == form.course.value %}selected{% endif %}>{{ course.name }}</option>
+                        {% endfor %}
+                    </select>
+                    {% if form.course.errors %}
+                    <p class="mt-2 text-sm text-red-600">{{ form.course.errors }}</p>
+                    {% endif %}
+                </div>
+                <div class="sm:col-span-2">
+                    <label for="id_staff" class="block text-sm font-medium text-gray-700">Staff</label>
+                    <select name="staff" id="id_staff" class="mt-1 block w-full shadow-sm border-gray-300 rounded-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                        {% for staff in form.fields.staff.queryset %}
+                        <option value="{{ staff.pk }}" {% if staff.pk == form.staff.value %}selected{% endif %}>{{ staff.user.username }}</option>
+                        {% endfor %}
+                    </select>
+                    {% if form.staff.errors %}
+                    <p class="mt-2 text-sm text-red-600">{{ form.staff.errors }}</p>
+                    {% endif %}
+                </div>
+                <div class="sm:col-span-1">
+                    <label for="id_day_of_week" class="block text-sm font-medium text-gray-700">Day of Week</label>
+                    <select name="day_of_week" id="id_day_of_week" class="mt-1 block w-full shadow-sm border-gray-300 rounded-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                        {% for value, label in form.fields.day_of_week.choices %}
+                        <option value="{{ value }}" {% if value == form.day_of_week.value %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                    {% if form.day_of_week.errors %}
+                    <p class="mt-2 text-sm text-red-600">{{ form.day_of_week.errors }}</p>
+                    {% endif %}
+                </div>
+                <div class="sm:col-span-1">
+                    <label for="id_start_time" class="block text-sm font-medium text-gray-700">Start Time</label>
+                    <input type="time" name="start_time" id="id_start_time" value="{{ form.start_time.value }}" class="mt-1 block w-full shadow-sm border-gray-300 rounded-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    {% if form.start_time.errors %}
+                    <p class="mt-2 text-sm text-red-600">{{ form.start_time.errors }}</p>
+                    {% endif %}
+                </div>
+                <div class="sm:col-span-1">
+                    <label for="id_end_time" class="block text-sm font-medium text-gray-700">End Time</label>
+                    <input type="time" name="end_time" id="id_end_time" value="{{ form.end_time.value }}" class="mt-1 block w-full shadow-sm border-gray-300 rounded-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                    {% if form.end_time.errors %}
+                    <p class="mt-2 text-sm text-red-600">{{ form.end_time.errors }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="flex justify-end space-x-4">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
+                <a href="{% url 'timetable_list' %}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

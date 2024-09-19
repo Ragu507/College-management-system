@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="container mx-auto px-4">
+    <h1 class="text-3xl font-bold mb-6">Dashboard</h1>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Basic Stats -->
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-xl font-semibold">Departments</h2>
+            <p class="text-gray-700">{{ department_count }} total departments</p>
+        </div>
+
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-xl font-semibold">Staff</h2>
+            <p class="text-gray-700">{{ staff_count }} total staff members</p>
+        </div>
+
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-xl font-semibold">Students</h2>
+            <p class="text-gray-700">{{ student_count }} total students</p>
+        </div>
+
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-xl font-semibold">Courses</h2>
+            <p class="text-gray-700">{{ course_count }} total courses</p>
+        </div>
+
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-xl font-semibold">Attendance</h2>
+            <p class="text-gray-700">{{ attendance_count }} attendance records</p>
+        </div>
+
+    </div>
+
+    <!-- Timetable -->
+    <div class="mt-10">
+        <h2 class="text-2xl font-semibold mb-4">Upcoming Timetable</h2>
+        <div class="bg-white shadow rounded-lg p-6">
+            <table class="table-auto w-full">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2">Course</th>
+                        <th class="px-4 py-2">Staff</th>
+                        <th class="px-4 py-2">Day</th>
+                        <th class="px-4 py-2">Start Time</th>
+                        <th class="px-4 py-2">End Time</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for timetable in upcoming_timetable %}
+                    <tr>
+                        <td class="border px-4 py-2">{{ timetable.course.name }}</td>
+                        <td class="border px-4 py-2">{{ timetable.staff.user.username }}</td>
+                        <td class="border px-4 py-2">{{ timetable.day_of_week }}</td>
+                        <td class="border px-4 py-2">{{ timetable.start_time }}</td>
+                        <td class="border px-4 py-2">{{ timetable.end_time }}</td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="5" class="border px-4 py-2 text-center">No upcoming timetable</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Recent Activities -->
+    <div class="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Recent Attendance -->
+        <div class="bg-white shadow rounded-lg p-6">
+            <h2 class="text-2xl font-semibold mb-4">Recent Attendance</h2>
+            <ul>
+                {% for attendance in recent_attendance %}
+                <li class="mb-2">{{ attendance.student.user.username }} - {{ attendance.status }} on {{ attendance.date }}</li>
+                {% empty %}
+                <li>No recent attendance records found.</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <!-- Recent Exams -->
+    </div>
+</div>
+{% endblock %}

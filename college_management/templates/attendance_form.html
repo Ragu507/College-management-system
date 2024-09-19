@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+
+{% block title %}Add/Edit Attendance{% endblock %}
+
+{% block content %}
+<div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 lg:py-8 py-4">
+    <div class="py-8 bg-white shadow sm:rounded-lg p-4">
+        <h1 class="text-2xl font-bold text-gray-900 mb-6">
+        {% if form.instance.pk %}
+            Edit Attendance
+        {% else %}
+            Create Attendance
+        {% endif %}</h1>
+        <form method="post" class="space-y-6">
+            {% csrf_token %}
+            <div class="grid grid-cols-1 gap-y-6 sm:grid-cols-2 sm:gap-x-6">
+                <div class="sm:col-span-2">
+                    <label for="id_student" class="block text-sm font-medium text-gray-700">Student</label>
+                    <select name="student" id="id_student" class="mt-1 block w-full shadow-sm border-gray-300 rounded-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                        {% for student in form.fields.student.queryset %}
+                        <option value="{{ student.pk }}" {% if student.pk == form.student.value %}selected{% endif %}>{{ student.user.username }}</option>
+                        {% endfor %}
+                    </select>
+                    {% if form.student.errors %}
+                    <p class="mt-2 text-sm text-red-600">{{ form.student.errors }}</p>
+                    {% endif %}
+                </div>
+                <div class="sm:col-span-2">
+                    <label for="id_course" class="block text-sm font-medium text-gray-700">Course</label>
+                    <select name="course" id="id_course" class="mt-1 block w-full shadow-sm border-gray-300 rounded-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                        {% for course in form.fields.course.queryset %}
+                        <option value="{{ course.pk }}" {% if course.pk == form.course.value %}selected{% endif %}>{{ course.name }}</option>
+                        {% endfor %}
+                    </select>
+                    {% if form.course.errors %}
+                    <p class="mt-2 text-sm text-red-600">{{ form.course.errors }}</p>
+                    {% endif %}
+                </div>
+                <div class="sm:col-span-2">
+                    <label for="id_date" class="block text-sm font-medium text-gray-700">Date</label>
+                    <input type="date" name="date" id="id_date" value="{{ form.date.value }}" class="mt-1 block w-full shadow-sm border-gray-300 rounded-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" required>
+                    {% if form.date.errors %}
+                    <p class="mt-2 text-sm text-red-600">{{ form.date.errors }}</p>
+                    {% endif %}
+                </div>
+                <div class="sm:col-span-2">
+                    <label for="id_status" class="block text-sm font-medium text-gray-700">Status</label>
+                    <select name="status" id="id_status" class="mt-1 block w-full shadow-sm border-gray-300 rounded-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
+                        <option value="True" {% if form.status.value == True %}selected{% endif %}>Present</option>
+                        <option value="False" {% if form.status.value == False %}selected{% endif %}>Absent</option>
+                    </select>
+                    {% if form.status.errors %}
+                    <p class="mt-2 text-sm text-red-600">{{ form.status.errors }}</p>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="flex justify-end space-x-4">
+                <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded-md shadow-sm hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Save</button>
+                <a href="{% url 'attendance_list' %}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

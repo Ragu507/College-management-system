@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block title %}Timetable Detail{% endblock %}
+
+{% block content %}
+<div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="py-8">
+        <h1 class="text-3xl font-bold text-gray-900 mb-4">Timetable Detail</h1>
+        <div class="mb-4">
+            <p class="text-lg font-medium text-gray-700">Course: {{ timetable.course.name }}</p>
+            <p class="text-lg font-medium text-gray-700">Staff: {{ timetable.staff.user.username }}</p>
+            <p class="text-lg font-medium text-gray-700">Day of Week: {{ timetable.get_day_of_week_display }}</p>
+            <p class="text-lg font-medium text-gray-700">Start Time: {{ timetable.start_time }}</p>
+            <p class="text-lg font-medium text-gray-700">End Time: {{ timetable.end_time }}</p>
+        </div>
+        <a href="{% url 'timetable_update' timetable.pk %}" class="text-blue-500 hover:text-blue-700">Edit</a>
+        <a href="{% url 'timetable_list' %}" class="text-gray-500 hover:text-gray-700 ml-4">Back to List</a>
+    </div>
+</div>
+{% endblock %}
