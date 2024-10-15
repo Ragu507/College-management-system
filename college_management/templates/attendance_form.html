@@ -46,8 +46,8 @@
                 <div class="sm:col-span-2">
                     <label for="id_status" class="block text-sm font-medium text-gray-700">Status</label>
                     <select name="status" id="id_status" class="mt-1 block w-full shadow-sm border-gray-300 rounded-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                        <option value="1" {% if form.status.value == True %}selected{% endif %}>Present</option>
-                        <option value="0" {% if form.status.value == False %}selected{% endif %}>Absent</option>
+                        <option value="present" {% if form.status.value == True %}selected{% endif %}>Present</option>
+                        <option value="absent" {% if form.status.value == False %}selected{% endif %}>Absent</option>
                     </select>
                     {% if form.status.errors %}
                     <p class="mt-2 text-sm text-red-600">{{ form.status.errors }}</p>
