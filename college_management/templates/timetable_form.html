@@ -37,11 +37,7 @@
                 </div>
                 <div class="sm:col-span-1">
                     <label for="id_day_of_week" class="block text-sm font-medium text-gray-700">Day of Week</label>
-                    <select name="day_of_week" id="id_day_of_week" class="mt-1 block w-full shadow-sm border-gray-300 rounded-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
-                        {% for value, label in form.fields.day_of_week.choices %}
-                        <option value="{{ value }}" {% if value == form.day_of_week.value %}selected{% endif %}>{{ label }}</option>
-                        {% endfor %}
-                    </select>
+                    <input type="text" name="day_of_week" id="id_day_of_week" value="{{ form.day_of_week.value }}" class="mt-1 block w-full shadow-sm border-gray-300 rounded-md focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm">
                     {% if form.day_of_week.errors %}
                     <p class="mt-2 text-sm text-red-600">{{ form.day_of_week.errors }}</p>
                     {% endif %}
